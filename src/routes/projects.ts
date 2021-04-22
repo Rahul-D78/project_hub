@@ -1,5 +1,6 @@
 import { Router } from 'express'
 import { addProject, deleteProject, getProjectBySlug, getProjects, updateProject } from "../controllers/projects"
+import { authByToken } from '../middlewares/auth';
 const route = Router()
 
 route.get('/', async(req, res) => {
@@ -20,9 +21,9 @@ route.get('/:slug', async(req, res) => {
     }
 });
 
-route.post('/', async(req, res) => {
+route.post('/', authByToken,async(req, res) => {
     try {
-        const project = await addProject(req.body);
+        const project = await addProject(req.body, (req as any).user.email);
         res.status(200).send(project);
     } catch (e) {
         res.status(500).send(`error posting the project ${e}`);

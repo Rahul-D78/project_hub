@@ -1,5 +1,7 @@
 import { getRepository } from "typeorm";
 import { Project } from "../entities/Projects";
+import { User } from "../entities/Users";
+import { sanitization } from "../utils/security";
 import { slugify } from "../utils/stringUtils";
 
 interface projectData {
@@ -34,14 +36,28 @@ export async function getProjectBySlug(slug: string): Promise<Project> {
     }
 };
 
-export async function addProject(data: projectData): Promise<Project> {
+export async function addProject(data: projectData, email: string): Promise<Project> {
     try {
-        const repo = getRepository(Project)
+       //validation
+        if(!data.title) throw new Error("title field could not be blank");
+        if(!data.body) throw new Error("body field could not be blank");
+
+        const repo = getRepository(Project);
+
+        const uRepo = getRepository(User);
+        const user = await uRepo.findOne(email);
+
+        if(!user) throw new Error("User with email not exists");
+
+        const exist = await repo.findOne(data.title);
+        if(exist) throw new Error("Title already exists create a new one");
+
         const project = repo.save(new Project(
             await slugify(data.title),
             data.body,
             data.title,
-            data.tags
+            data.tags,
+            await sanitization(user)
         ));
         return project
     } catch (e) {

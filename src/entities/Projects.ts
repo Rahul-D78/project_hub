@@ -1,6 +1,7 @@
-import { Column, Entity, PrimaryColumn } from "typeorm";
+import { Column, CreateDateColumn, Entity, ManyToOne, PrimaryColumn, UpdateDateColumn } from "typeorm";
+import { User } from "./Users";
 
-@Entity('Projects')
+@Entity('projects')
 export class Project {
     @PrimaryColumn()
     slug: string
@@ -14,10 +15,20 @@ export class Project {
     @Column({type: 'text', nullable: true})
     tags?: string[]
 
-    constructor(slug: string, body: string, title: string, tags: string[]) {
+    @ManyToOne(() => User)
+    author: User
+
+    @CreateDateColumn()
+    createdAt: Date
+
+    @UpdateDateColumn()
+    updatedAt: Date
+
+    constructor(slug: string, body: string, title: string, tags: string[], author: User) {
         this.slug = slug
         this.body = body
         this.title = title
         this.tags = tags
+        this.author = author
     }
 }

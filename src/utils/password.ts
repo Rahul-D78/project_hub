@@ -21,8 +21,8 @@ export async function matchPass(hash: string, password: string): Promise<boolean
 }
 
 //only for testing
-const hash = hashPass("1234");
-console.log(await(hash));
+// const hash = hashPass("1234");
+// console.log(await(hash));
 
-const match =  matchPass(await(hash), "1234")
-console.log(await(match));
+// const match =  matchPass(await(hash), "1234")
+// console.log(await(match));

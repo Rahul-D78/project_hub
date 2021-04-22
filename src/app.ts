@@ -1,5 +1,6 @@
 import express from 'express'
 import { createConnection } from 'typeorm'
+import { Project } from './entities/Projects'
 import {User} from './entities/Users'
 import {allRoute} from './routes/allRoutes'
 
@@ -19,9 +20,10 @@ async function start() {
         username:'project',
         password:'project',
         database: 'project',
-        entities:[User],
+        entities:[User, Project],
         synchronize: true,
         logging:true,
+        dropSchema: true,
         logger:'advanced-console'
     })
     app.listen(port, ()  => console.log(`server is running on http://localhost:${port}`))

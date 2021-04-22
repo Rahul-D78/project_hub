@@ -1,5 +1,6 @@
 import { getRepository } from "typeorm";
 import { User } from "../entities/Users";
+import { sign } from "../utils/jwt";
 import { hashPass, matchPass } from "../utils/password";
 import { sanitization } from "../utils/security";
 
@@ -69,6 +70,8 @@ export async function loginUser(data: userLoginData): Promise<User> {
         //check if password matches
         const match = await matchPass(user?.password!, data.password);
         if(match === false) throw new Error("password does not match");
+
+        user.token = await sign(user)
 
         return sanitization(user)
     } catch (e) {

@@ -1,6 +1,6 @@
 import { Column, Entity, PrimaryColumn } from "typeorm";
 
-@Entity('Users')
+@Entity('users')
 export class User {
     @PrimaryColumn()
     email: string

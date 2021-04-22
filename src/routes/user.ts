@@ -1,5 +1,6 @@
 import {Router} from 'express'
 import { registerUser, deleteUser, getAllUsers, updateUser, getUserByEmail, loginUser } from '../controllers/users';
+import { authByToken } from '../middlewares/auth';
 
 const route = Router()
 
@@ -30,7 +31,7 @@ route.post('/register', async(req, res) => {
     }
 });
 
-route.post('/login', async(req, res) => {
+route.post('/login' ,async(req, res) => {
     try {
         const user = await loginUser(req.body);
         res.status(200).send(user);
