@@ -1,6 +1,6 @@
 import { Column, Entity, PrimaryColumn } from "typeorm";
 
-@Entity()
+@Entity('Users')
 export class User {
     @PrimaryColumn()
     email: string
@@ -18,4 +18,10 @@ export class User {
     bio: string
 
     token: string
+
+    constructor(email: string, username: string, password: string) {
+        this.email = email
+        this.username = username
+        this.password = password
+    }
 }
