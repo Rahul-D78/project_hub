@@ -1,5 +1,5 @@
 # Introduction :
-This site has got all the cool projects from various developers which you can 'discover', 'learn', and 'contribute' .
+This site has got all the cool projects from various developers which you can `discover`, `learn`, and `contribute` .
 
 ## Technologies used 
 
